@@ -10,7 +10,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
       <!-- Font -->
     <style>
       @import url("https://fonts.googleapis.com/css?family=Karla:400,700&display=swap");

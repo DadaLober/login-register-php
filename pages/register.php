@@ -10,7 +10,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <!-- Font -->
     <style>
       @import url("https://fonts.googleapis.com/css?family=Karla:400,700&display=swap");
@@ -110,6 +110,15 @@
   </body>
   <!-- For Particle -->
   <script src="../js/particle-animation.js"></script>
-  <!-- For Custom Alert Box (will do later)-->
+  <!-- For Custom Alert Box-->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <?php  if (isset($_SESSION['status'])) : ?>
+    <script>
+    Swal.fire({
+    title: "<?php echo $_SESSION['status']; ?>",
+    // text: "Registered Successfully!",
+    icon: "<?php echo $_SESSION['status_code']; ?>",
+});
+  </script>
+    <?php endif ?>
 </html>
