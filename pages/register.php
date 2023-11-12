@@ -1,35 +1,17 @@
-<?php include('server.php') ?>
+<?php include('../scripts/server.php') ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login Here</title>
-
+    <title>Register Here</title>
     <!-- Tailwind -->
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
       rel="stylesheet"
     />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
-    ></script>
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            fontFamily: {
-              inter: ["Inter", "sans-serif"],
-            },
-          },
-        },
-      };
-    </script>
     <link rel="stylesheet" href="./css/style.css">
-      <!-- Font -->
+    <!-- Font -->
     <style>
       @import url("https://fonts.googleapis.com/css?family=Karla:400,700&display=swap");
 
@@ -41,48 +23,72 @@
 
   <body class="bg-white font-family-karla h-screen">
     <div class="w-full flex flex-wrap">
-      <!-- Login Section -->
+      <!-- Register Section -->
       <div class="w-full md:w-1/2 flex flex-col">
         <div
           class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32"
         >
-          <p class="text-center text-3xl">Welcome.</p>
-          <form class="flex flex-col pt-3 md:pt-8" method="post" action="login.php">
-          <?php include('errors.php'); ?>
+          <p class="text-center text-3xl">Join Us.</p>
+          <form class="flex flex-col pt-3 md:pt-8" method="post" action="register.php">
+          <?php include('../scripts/errors.php'); ?> 
+            <div class="flex flex-col pt-4">
+              <label class="text-lg">Student ID</label>
+              <input
+                type="text"
+                id="stud_id"
+                name="stud_id"
+                placeholder="SUM2021-01384"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                value="<?php echo $stud_id; ?>"
+              />
+            </div>
             <div class="flex flex-col pt-4">
               <label class="text-lg">Username</label>
               <input
                 type="text"
-                id="Username"
+                id="username"
                 name="username"
-                placeholder="Username"
+                placeholder="DragonMaster23"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                value="<?php echo $username; ?>"
               />
             </div>
 
             <div class="flex flex-col pt-4">
               <label class="text-lg">Password</label>
               <input
-                type="password"
-                id="password"
-                name="password"
+                type="text"
+                id="password_1"
+                name="password_1"
                 placeholder="Password"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                value="<?php echo $password_1; ?>"
+              />
+            </div>
+            <div class="flex flex-col pt-4">
+              <label class="text-lg">Password</label>
+              <input
+                type="text"
+                id="password_2"
+                name="password_2"
+                placeholder="Confirm Password"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                value="<?php echo $password_2; ?>"
               />
             </div>
 
             <input
               type="submit"
-              value="Log In"
-              name="login_user"
+              value="Register"
+              name="reg_user"
               class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8"
             />
           </form>
           <div class="text-center pt-12 pb-12">
             <p>
-              Don't have an account?
-              <a href="register.php" class="underline font-semibold"
-                >Register here.</a
+              Already have an account?
+              <a href="login.php" class="underline font-semibold"
+                >Log in here.</a
               >
             </p>
           </div>
@@ -96,12 +102,14 @@
       <div class="w-1/2 shadow-2xl">
         <img
           class="object-cover w-full h-screen hidden md:block"
-          src="./img/loginbg.png"
+          src="../img/registerbg.png"
+          alt="Background"
         />
       </div>
     </div>
   </body>
-  <script src="./js/particle-animation.js"></script>
-    <!-- For Custom Alert Box (will do later)-->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- For Particle -->
+  <script src="../js/particle-animation.js"></script>
+  <!-- For Custom Alert Box (will do later)-->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </html>
