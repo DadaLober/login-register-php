@@ -1,4 +1,4 @@
-<?php include('../scripts/server.php') ?>
+<?php include('../scripts/register_post.php') ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,15 +10,13 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/style.css">
+    <!-- sweetalert js cdn For alerts-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.11/dist/sweetalert2.min.css"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
     <!-- Font -->
-    <style>
-      @import url("https://fonts.googleapis.com/css?family=Karla:400,700&display=swap");
-
-      .font-family-karla {
-        font-family: karla;
-      }
-    </style>
   </head>
 
   <body class="bg-white font-family-karla h-screen">
@@ -29,28 +27,28 @@
           class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32"
         >
           <p class="text-center text-3xl">Join Us.</p>
-          <form class="flex flex-col pt-3 md:pt-8" method="post" action="register.php">
+          <form
+            class="flex flex-col pt-3 md:pt-8"
+            method="post"
+            action="register.php"
+          >
           <?php include('../scripts/errors.php'); ?> 
             <div class="flex flex-col pt-4">
-              <label class="text-lg">Student ID</label>
+              <label class="text-lg">Email</label>
               <input
-                type="text"
-                id="stud_id"
-                name="stud_id"
-                placeholder="SUM2021-01384"
+                type="email"
+                name="col_email"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-                value="<?php echo $stud_id; ?>"
+                required
               />
             </div>
             <div class="flex flex-col pt-4">
               <label class="text-lg">Username</label>
               <input
                 type="text"
-                id="username"
-                name="username"
-                placeholder="DragonMaster23"
+                name="col_username"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-                value="<?php echo $username; ?>"
+                required
               />
             </div>
 
@@ -58,22 +56,18 @@
               <label class="text-lg">Password</label>
               <input
                 type="text"
-                id="password_1"
-                name="password_1"
-                placeholder="Password"
+                name="col_password"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-                value="<?php echo $password_1; ?>"
+                required
               />
             </div>
             <div class="flex flex-col pt-4">
-              <label class="text-lg">Password</label>
+              <label class="text-lg">Confirm Password</label>
               <input
                 type="text"
-                id="password_2"
-                name="password_2"
-                placeholder="Confirm Password"
+                name="col_password2"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-                value="<?php echo $password_2; ?>"
+                required
               />
             </div>
 
@@ -110,15 +104,9 @@
   </body>
   <!-- For Particle -->
   <script src="../js/particle-animation.js"></script>
-  <!-- For Custom Alert Box-->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <?php  if (isset($_SESSION['status'])) : ?>
-    <script>
-    Swal.fire({
-    title: "<?php echo $_SESSION['status']; ?>",
-    // text: "Registered Successfully!",
-    icon: "<?php echo $_SESSION['status_code']; ?>",
-});
-  </script>
-    <?php endif ?>
+  <!-- For Custom Alert Box -->
+  <script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.11/dist/sweetalert2.min.js"
+  ></script>
 </html>

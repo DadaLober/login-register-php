@@ -1,4 +1,7 @@
-<?php include('../scripts/server.php') ?>
+<?php 
+include('../scripts/login_post.php');
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,15 +13,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/style.css">
-      <!-- Font -->
-    <style>
-      @import url("https://fonts.googleapis.com/css?family=Karla:400,700&display=swap");
-
-      .font-family-karla {
-        font-family: karla;
-      }
-    </style>
+    <link rel="stylesheet" href="../css/style.css" />
   </head>
 
   <body class="bg-white font-family-karla h-screen">
@@ -29,16 +24,26 @@
           class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32"
         >
           <p class="text-center text-3xl">Welcome.</p>
-          <form class="flex flex-col pt-3 md:pt-8" method="post" action="login.php">
-          <?php include('../scripts/errors.php'); ?> 
+          <form
+            class="flex flex-col pt-3 md:pt-8"
+            method="post"
+            action="login.php"
+          >
+            <?php include('../scripts/errors.php'); ?>
+            <!-- alert for creating acc -->
+            <?php if(isset($_SESSION['status'])){ ?>
+            <div class="success" role="alert">
+                Account Created Successfully!
+            </div>
+            <?php unset($_SESSION['status']);}?>
             <div class="flex flex-col pt-4">
               <label class="text-lg">Username</label>
               <input
                 type="text"
                 id="Username"
                 name="username"
-                placeholder="Username"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                required
               />
             </div>
 
@@ -48,8 +53,8 @@
                 type="password"
                 id="password"
                 name="password"
-                placeholder="Password"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                required
               />
             </div>
 
@@ -83,8 +88,11 @@
       </div>
     </div>
   </body>
-    <!-- For Particle -->
+  <!-- For Particle -->
   <script src="../js/particle-animation.js"></script>
-    <!-- For Custom Alert Box (will do later)-->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- For Custom Alert Box -->
+  <script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.11/dist/sweetalert2.min.js"
+  ></script>
 </html>
