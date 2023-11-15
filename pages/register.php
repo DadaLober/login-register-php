@@ -32,7 +32,7 @@
             method="post"
             action="register.php"
           >
-          <?php include('../scripts/errors.php'); ?> 
+            <?php include('../scripts/errors.php'); ?>
             <div class="flex flex-col pt-4">
               <label class="text-lg">Email</label>
               <input

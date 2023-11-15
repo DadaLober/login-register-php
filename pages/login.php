@@ -33,7 +33,7 @@ include('../scripts/login_post.php');
             <!-- alert for creating acc -->
             <?php if(isset($_SESSION['status'])){ ?>
             <div class="success" role="alert">
-                Account Created Successfully!
+              Account Created Successfully!
             </div>
             <?php unset($_SESSION['status']);}?>
             <div class="flex flex-col pt-4">

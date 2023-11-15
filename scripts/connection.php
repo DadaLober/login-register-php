@@ -1,8 +1,9 @@
 <?php
 
-	$conn = mysqli_connect('localhost','root','','lnfdb');
+$conn = mysqli_connect("localhost", "root", "", "lnfdb");
 
-	if(!$conn)
-		die("Error while connecting...!").mysqli_connect_error($conn);
+if (!$conn) {
+    die("Error while connecting...!") . mysqli_connect_error($conn);
+}
 
 ?>
