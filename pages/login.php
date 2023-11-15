@@ -1,39 +1,19 @@
+<?php 
+include('../scripts/login_post.php');
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login Here</title>
-
     <!-- Tailwind -->
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
       rel="stylesheet"
     />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
-    ></script>
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            fontFamily: {
-              inter: ["Inter", "sans-serif"],
-            },
-          },
-        },
-      };
-    </script>
-    <style>
-      @import url("https://fonts.googleapis.com/css?family=Karla:400,700&display=swap");
-
-      .font-family-karla {
-        font-family: karla;
-      }
-    </style>
+    <link rel="stylesheet" href="../css/style.css" />
   </head>
 
   <body class="bg-white font-family-karla h-screen">
@@ -46,15 +26,24 @@
           <p class="text-center text-3xl">Welcome.</p>
           <form
             class="flex flex-col pt-3 md:pt-8"
-            onsubmit="event.preventDefault();"
+            method="post"
+            action="login.php"
           >
+            <?php include('../scripts/errors.php'); ?>
+            <!-- alert for creating acc -->
+            <?php if(isset($_SESSION['status'])){ ?>
+            <div class="success" role="alert">
+              Account Created Successfully!
+            </div>
+            <?php unset($_SESSION['status']);}?>
             <div class="flex flex-col pt-4">
               <label class="text-lg">Username</label>
               <input
                 type="text"
                 id="Username"
-                placeholder="Username"
+                name="username"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                required
               />
             </div>
 
@@ -63,21 +52,23 @@
               <input
                 type="password"
                 id="password"
-                placeholder="Password"
+                name="password"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                required
               />
             </div>
 
             <input
               type="submit"
               value="Log In"
+              name="login_user"
               class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8"
             />
           </form>
           <div class="text-center pt-12 pb-12">
             <p>
               Don't have an account?
-              <a href="register.html" class="underline font-semibold"
+              <a href="register.php" class="underline font-semibold"
                 >Register here.</a
               >
             </p>
@@ -97,5 +88,11 @@
       </div>
     </div>
   </body>
-  <script src="/js/particle-animation.js"></script>
+  <!-- For Particle -->
+  <script src="../js/particle-animation.js"></script>
+  <!-- For Custom Alert Box -->
+  <script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.11/dist/sweetalert2.min.js"
+  ></script>
 </html>
