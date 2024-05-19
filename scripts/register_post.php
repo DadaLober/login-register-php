@@ -1,49 +1,61 @@
 <?php
 
-include "../scripts/connection.php";
+require_once "../scripts/connection.php";
 
 session_start();
 $errors = [];
 
-// Check if the registration form is submitted
 if (isset($_POST["reg_user"])) {
-    // Get and sanitize input values from the form
-    $email = mysqli_real_escape_string($conn, $_POST["col_email"]);
-    $username = mysqli_real_escape_string($conn, $_POST["col_username"]);
-    $password_1 = mysqli_real_escape_string($conn, $_POST["col_password"]);
-    $password_2 = mysqli_real_escape_string($conn, $_POST["col_password2"]);
+    var_dump($_POST);
+    $data = sanitizeFormData($conn, $_POST);
 
-    // Check if both passwords match
-    if ($password_1 == $password_2) {
-        // Check if email or username already exists
-        $user_check_query =
-            "SELECT * FROM tblusers WHERE col_username = ? OR col_email = ? LIMIT 1";
-        $stmt = $conn->prepare($user_check_query);
-        $stmt->bind_param("ss", $username, $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
+    if ($data["password"] === $data["confirm_password"]) {
+        $userExists = userExists($conn, $data["username"], $data["email"]);
 
-        if ($result->num_rows > 0) {
-            array_push($errors, "Email or Username already exists!");
+        if ($userExists) {
+            $errors[] = "Email or Username already exists!";
         } else {
-            $hashedpassword = md5($password_1); // Hash the password
-            $query =
-                "INSERT INTO tblusers (`col_email`,`col_username`,`col_password`) VALUES(?,?,?)";
-            $stmt = $conn->prepare($query);
-            $stmt->bind_param("sss", $email, $username, $hashedpassword);
-            $stmt->execute();
+            $hashedPassword = md5($data["password"]);
+            $registrationSuccessful = registerUser($conn, $data["email"], $data["username"], $hashedPassword);
 
-            // Check if the registration was successful
-            if ($stmt->affected_rows > 0) {
+            if ($registrationSuccessful) {
                 $_SESSION["status"] = "Account Created Successfully!";
                 header("Location: login.php");
                 exit();
             } else {
-                array_push($errors, "Error while adding: " . $stmt->error);
+                $errors[] = "Error while adding: " . $stmt->error;
             }
         }
     } else {
-        array_push($errors, "The two passwords does not match!");
+        $errors[] = "The two passwords do not match!";
     }
 }
-?>
+
+function sanitizeFormData($conn, $data)
+{
+    $sanitizedData = [];
+    foreach ($data as $key => $value) {
+        $sanitizedData[$key] = mysqli_real_escape_string($conn, $value);
+    }
+    return $sanitizedData;
+}
+
+function userExists($conn, $username, $email)
+{
+    $query = "SELECT * FROM tblusers WHERE col_username = ? OR col_email = ? LIMIT 1";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ss", $username, $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->num_rows > 0;
+}
+
+function registerUser($conn, $email, $username, $hashedPassword)
+{
+    $query = "INSERT INTO tblusers (`col_email`,`col_username`,`col_password`) VALUES(?,?,?)";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("sss", $email, $username, $hashedPassword);
+    $stmt->execute();
+    return $stmt->affected_rows > 0;
+}
+

@@ -1,4 +1,5 @@
 <?php include('../scripts/register_post.php') ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -37,7 +38,7 @@
               <label class="text-lg">Email</label>
               <input
                 type="email"
-                name="col_email"
+                name="email"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
                 required
               />
@@ -46,7 +47,7 @@
               <label class="text-lg">Username</label>
               <input
                 type="text"
-                name="col_username"
+                name="username"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
                 required
               />
@@ -56,7 +57,7 @@
               <label class="text-lg">Password</label>
               <input
                 type="text"
-                name="col_password"
+                name="password"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
                 required
               />
@@ -65,7 +66,7 @@
               <label class="text-lg">Confirm Password</label>
               <input
                 type="text"
-                name="col_password2"
+                name="confirm_password"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
                 required
               />

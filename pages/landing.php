@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Lost and Found</title>
+    <title>Simple Login </title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -72,12 +72,11 @@
             <h1
               class="inline-flex font-extrabold text-5xl md:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4"
             >
-              Lost and Found Web Applicaiton
+              Your Web Application
             </h1>
             <div class="max-w-3xl mx-auto mb-8">
               <p class="text-lg text-slate-400">
-                Find what's lost, cherish what's found – Connecting lost items
-                with their rightful owners.
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. A rem libero fuga laudantium quas nam, sit officia nisi.
               </p>
             </div>
             <div class="inline-flex justify-center space-x-4">
