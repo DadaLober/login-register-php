@@ -1,61 +1,114 @@
 <?php
+/**
+ * Registration Processing Script
+ * Handles user registration
+ */
 
-require_once "../scripts/connection.php";
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../models/User.php';
+require_once __DIR__ . '/../includes/SessionManager.php';
 
-session_start();
-$errors = [];
-
-if (isset($_POST["reg_user"])) {
-    var_dump($_POST);
-    $data = sanitizeFormData($conn, $_POST);
-
-    if ($data["password"] === $data["confirm_password"]) {
-        $userExists = userExists($conn, $data["username"], $data["email"]);
-
-        if ($userExists) {
-            $errors[] = "Email or Username already exists!";
-        } else {
-            $hashedPassword = md5($data["password"]);
-            $registrationSuccessful = registerUser($conn, $data["email"], $data["username"], $hashedPassword);
-
-            if ($registrationSuccessful) {
-                $_SESSION["status"] = "Account Created Successfully!";
-                header("Location: login.php");
-                exit();
-            } else {
-                $errors[] = "Error while adding: " . $stmt->error;
+class RegisterController
+{
+    private $userModel;
+    private $errors = [];
+    
+    public function __construct()
+    {
+        $this->userModel = new User();
+        SessionManager::start();
+    }
+    
+    /**
+     * Process registration form submission
+     */
+    public function processRegistration()
+    {
+        if (!isset($_POST['reg_user'])) {
+            return;
+        }
+        
+        // Sanitize input data
+        $userData = $this->sanitizeFormData($_POST);
+        
+        // Validate user data
+        $this->errors = $this->userModel->validateUserData($userData);
+        
+        // Check if user already exists
+        if (empty($this->errors)) {
+            if ($this->userModel->userExists($userData['username'], $userData['email'])) {
+                $this->errors[] = "Email or Username already exists!";
             }
         }
-    } else {
-        $errors[] = "The two passwords do not match!";
+        
+        // If no errors, create the user
+        if (empty($this->errors)) {
+            $userId = $this->userModel->createUser(
+                $userData['email'],
+                $userData['username'],
+                $userData['password']
+            );
+            
+            if ($userId) {
+                $this->handleSuccessfulRegistration();
+            } else {
+                $this->errors[] = "Registration failed. Please try again.";
+            }
+        }
+        
+        // Store errors in session for display
+        if (!empty($this->errors)) {
+            SessionManager::setErrors($this->errors);
+        }
+    }
+    
+    /**
+     * Handle successful user registration
+     */
+    private function handleSuccessfulRegistration()
+    {
+        SessionManager::setFlash('status', 'Account Created Successfully!');
+        $this->redirectTo('login.php');
+    }
+    
+    /**
+     * Sanitize form data
+     */
+    private function sanitizeFormData($data)
+    {
+        $sanitized = [];
+        $fields = ['email', 'username', 'password', 'confirm_password'];
+        
+        foreach ($fields as $field) {
+            $sanitized[$field] = isset($data[$field]) 
+                ? trim(htmlspecialchars(strip_tags($data[$field]))) 
+                : '';
+        }
+        
+        return $sanitized;
+    }
+    
+    /**
+     * Redirect to specified location
+     */
+    private function redirectTo($location)
+    {
+        header("Location: " . $location);
+        exit();
+    }
+    
+    /**
+     * Get current errors
+     */
+    public function getErrors()
+    {
+        return SessionManager::getErrors();
     }
 }
 
-function sanitizeFormData($conn, $data)
-{
-    $sanitizedData = [];
-    foreach ($data as $key => $value) {
-        $sanitizedData[$key] = mysqli_real_escape_string($conn, $value);
-    }
-    return $sanitizedData;
-}
+// Initialize and process registration
+$registerController = new RegisterController();
+$registerController->processRegistration();
 
-function userExists($conn, $username, $email)
-{
-    $query = "SELECT * FROM tblusers WHERE col_username = ? OR col_email = ? LIMIT 1";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("ss", $username, $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    return $result->num_rows > 0;
-}
-
-function registerUser($conn, $email, $username, $hashedPassword)
-{
-    $query = "INSERT INTO tblusers (`col_email`,`col_username`,`col_password`) VALUES(?,?,?)";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("sss", $email, $username, $hashedPassword);
-    $stmt->execute();
-    return $stmt->affected_rows > 0;
-}
-
+// Get errors for display
+$errors = $registerController->getErrors();

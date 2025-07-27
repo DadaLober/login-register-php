@@ -1,38 +1,101 @@
 <?php
+/**
+ * Login Processing Script
+ * Handles user login authentication
+ */
 
-require_once "../scripts/connection.php";
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../models/User.php';
+require_once __DIR__ . '/../includes/SessionManager.php';
 
-session_start();
-$errors = [];
-
-if (isset($_POST["login_user"])) {
-    $username = sanitize($_POST["username"]);
-    $password = sanitize($_POST["password"]);
-
-    if (count($errors) == 0) {
-        $password = md5($password);
-        $stmt = $conn->prepare("SELECT * FROM tblusers WHERE col_username = ? AND col_password = ? ");
-        $stmt->bind_param("ss", $username, $password);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows == 1) {
-            $_SESSION["username"] = $username;
-            $_SESSION["success"] = "You are now logged in";
-            redirectTo("dashboard.php");
-        } else {
-            $errors[] = "Wrong Username and Password combination";
+class LoginController
+{
+    private $userModel;
+    private $errors = [];
+    
+    public function __construct()
+    {
+        $this->userModel = new User();
+        SessionManager::start();
+    }
+    
+    /**
+     * Process login form submission
+     */
+    public function processLogin()
+    {
+        if (!isset($_POST['login_user'])) {
+            return;
         }
+        
+        $username = $this->sanitizeInput($_POST['username'] ?? '');
+        $password = $this->sanitizeInput($_POST['password'] ?? '');
+        
+        // Validate input
+        if (empty($username)) {
+            $this->errors[] = "Username is required";
+        }
+        
+        if (empty($password)) {
+            $this->errors[] = "Password is required";
+        }
+        
+        // If no validation errors, attempt authentication
+        if (empty($this->errors)) {
+            $user = $this->userModel->authenticate($username, $password);
+            
+            if ($user) {
+                $this->loginUser($user);
+            } else {
+                $this->errors[] = "Invalid username or password";
+            }
+        }
+        
+        // Store errors in session for display
+        if (!empty($this->errors)) {
+            SessionManager::setErrors($this->errors);
+        }
+    }
+    
+    /**
+     * Login the authenticated user
+     */
+    private function loginUser($user)
+    {
+        SessionManager::login($user['col_username']);
+        SessionManager::setSuccess("Welcome back, " . $user['col_username'] . "!");
+        $this->redirectTo('dashboard.php');
+    }
+    
+    /**
+     * Sanitize user input
+     */
+    private function sanitizeInput($input)
+    {
+        return trim(htmlspecialchars(strip_tags($input)));
+    }
+    
+    /**
+     * Redirect to specified location
+     */
+    private function redirectTo($location)
+    {
+        header("Location: " . $location);
+        exit();
+    }
+    
+    /**
+     * Get current errors
+     */
+    public function getErrors()
+    {
+        return SessionManager::getErrors();
     }
 }
 
-function sanitize($data) {
-    global $conn;
-    return mysqli_real_escape_string($conn, trim($data));
-}
+// Initialize and process login
+$loginController = new LoginController();
+$loginController->processLogin();
 
-function redirectTo($location) {
-    header("Location: " . $location);
-    exit();
-}
-
+// Get errors for display
+$errors = $loginController->getErrors();
