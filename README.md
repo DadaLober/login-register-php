@@ -1,6 +1,9 @@
-# Simple Login & Register Authentication System
+# Login & Register Authentication System
 
 A lightweight PHP authentication system with user login and registration functionality. Built with PHP, MySQL.
+
+### About This Project
+This authentication system represents my journey as a developer - originally built during my second year of college and recently updated with the knowledge and best practices I've gained since then.
 
 ## Project Structure
 
