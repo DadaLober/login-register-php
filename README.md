@@ -1,27 +1,145 @@
-# Simple login and register function authentication with database
+# Simple Login & Register Authentication System
 
-## Installation:
+A lightweight PHP authentication system with user login and registration functionality. Built with PHP, MySQL.
 
-**Prerequisites:**
-- PHP installed
-- XAMPP (to test the code locally)
+## Project Structure
 
-**Steps:**
+```
+login-register-php/
+├── config/
+│   ├── config.php        # Environment configuration and constants
+│   └── database.php      # Database connection and query management
+├── includes/
+│   └── SessionManager.php # Session handling and user state management
+├── models/
+│   └── User.php          # User model
+├── scripts/
+│   ├── login_post.php    # Login form controller
+│   └── register_post.php # Registration form controller
+├── pages/
+│   ├── landing.php
+│   ├── login.php
+│   ├── register.php
+│   └── dashboard.php     # Protected dashboard page
+├── css/
+│   └── style.css
+├── js/
+│   └── particle-animation.js
+├── img/
+│   ├── shape.svg
+│   ├── loginbg.png
+│   └── registerbg.png
+├── .env                  # Environment variables (not included)
+├── .gitignore
+├── index.php            # Entry point redirect
+├── tblusers.sql         # Database schema
+└── README.md            # This file
+```
 
-- Create a database named **appdb**
-- Import **tblusers.sql** to your database **(appdb)**
-- Host locally in XAMPP htdocs folder
+## Key Features
 
-## Contributing
+-   **Session Management** - Comprehensive session handling with timeout support
+-   **Input Validation** - Server-side and client-side form validation
+-   **Responsive Design** - Mobile-first approach with modern CSS
+-   **Environment Configuration** - Secure configuration with .env support
 
-We welcome contributions to this project! Here's how you can get involved:
+## Technologies Used
 
-1. Fork the repository on GitHub.
-2. Create a new branch for your feature or bug fix.
-3. Implement your changes and write unit tests.
-4. Submit a pull request with a clear description of your changes.
-5. We'll review your pull request and provide feedback.
+-   **PHP 7.4+** (Server-side logic, authentication, session management)
+-   **MySQL/MariaDB** (User data storage with prepared statements)
+-   **HTML5 & CSS3** (Modern responsive design with flexbox and grid)
+-   **JavaScript ES6+** (Particle animations and form validation)
 
-**Licensing:**
+## Getting Started
 
-* This project is licensed under the MIT License.  See the LICENSE file for details.
+### Prerequisites
+
+-   PHP 7.4 or higher
+-   MySQL/MariaDB database server
+-   Apache web server (optional)
+-   Web browser with JavaScript enabled
+
+### Installation & Setup
+
+1. **Clone the repository**
+
+    ```bash
+    git clone https://github.com/DadaLober/login-register-php.git && cd login-register-php
+    ```
+
+2. **Set up MySQL database**
+
+    ```bash
+    # Start MySQL service
+    sudo systemctl start mysql
+
+    # Access MySQL command line
+    mysql -u root -p
+    ```
+
+    ```sql
+    CREATE DATABASE appdb;
+    USE appdb;
+    SOURCE tblusers.sql;
+    EXIT;
+    ```
+
+3. **Configure environment variables**
+
+    ```bash
+    # Create .env file with your database credentials
+    touch .env
+    ```
+
+    Add the following to your `.env` file:
+
+    ```env
+    DB_HOST=localhost
+    DB_USERNAME=root
+    DB_PASSWORD=your_mysql_password
+    DB_NAME=appdb
+    SESSION_LIFETIME=3600
+    ```
+
+4. **Start the PHP development server**
+
+    ```bash
+    php -S localhost:8000
+    ```
+
+5. **Access the application**
+
+    ```
+    Open your browser and navigate to: http://localhost:8000
+    ```
+
+### Configuration Options
+
+The application supports the following environment variables:
+
+| Variable           | Description                | Default     |
+| ------------------ | -------------------------- | ----------- |
+| `DB_HOST`          | Database host              | `localhost` |
+| `DB_USERNAME`      | Database username          | `root`      |
+| `DB_PASSWORD`      | Database password          | ` ` (empty) |
+| `DB_NAME`          | Database name              | `appdb`     |
+| `SESSION_LIFETIME` | Session timeout in seconds | `3600`      |
+
+### Database Setup
+
+The application requires a MySQL database with the following structure:
+
+```sql
+CREATE TABLE `tblusers` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `col_email` varchar(255) NOT NULL,
+  `col_username` varchar(255) NOT NULL,
+  `col_password` varchar(255) NOT NULL,
+  `col_role` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+```
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
