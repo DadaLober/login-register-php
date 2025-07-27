@@ -1,6 +1,5 @@
 <?php 
 include('../scripts/login_post.php');
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,52 +7,43 @@ include('../scripts/login_post.php');
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login Here</title>
-    <!-- Tailwind -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
-      rel="stylesheet"
-    />
     <link rel="stylesheet" href="../css/style.css" />
   </head>
 
-  <body class="bg-white font-family-karla h-screen">
-    <div class="w-full flex flex-wrap">
+  <body>
+    <div class="form-container">
       <!-- Login Section -->
-      <div class="w-full md:w-1/2 flex flex-col">
-        <div
-          class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32"
-        >
-          <p class="text-center text-3xl">Welcome.</p>
-          <form
-            class="flex flex-col pt-3 md:pt-8"
-            method="post"
-            action="login.php"
-          >
+      <div class="form-section">
+        <div class="form-content">
+          <p class="form-title">Welcome.</p>
+          <form class="form" method="post" action="login.php">
             <?php include('../scripts/errors.php'); ?>
-            <!-- alert for creating acc -->
+            
+            <!-- Alert for creating account -->
             <?php if(isset($_SESSION['status'])){ ?>
-            <div class="success" role="alert">
+            <div class="alert alert-success" role="alert">
               Account Created Successfully!
             </div>
             <?php unset($_SESSION['status']);}?>
-            <div class="flex flex-col pt-4">
-              <label class="text-lg">Username</label>
+            
+            <div class="form-group">
+              <label class="form-label">Username</label>
               <input
                 type="text"
                 id="Username"
                 name="username"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                class="form-input"
                 required
               />
             </div>
 
-            <div class="flex flex-col pt-4">
-              <label class="text-lg">Password</label>
+            <div class="form-group">
+              <label class="form-label">Password</label>
               <input
                 type="password"
                 id="password"
                 name="password"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                class="form-input"
                 required
               />
             </div>
@@ -62,37 +52,35 @@ include('../scripts/login_post.php');
               type="submit"
               value="Log In"
               name="login_user"
-              class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8"
+              class="form-submit"
             />
           </form>
-          <div class="text-center pt-12 pb-12">
+          
+          <div class="form-footer">
             <p>
               Don't have an account?
-              <a href="register.php" class="underline font-semibold"
-                >Register here.</a
-              >
+              <a href="register.php" class="form-link">Register here.</a>
             </p>
           </div>
         </div>
       </div>
+      
       <!-- Particles animation -->
-      <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <canvas data-particle-animation></canvas>
+      <div class="particle-container" aria-hidden="true">
+        <canvas class="particle-canvas" data-particle-animation></canvas>
       </div>
+      
       <!-- Image Section -->
-      <div class="w-1/2 shadow-2xl">
+      <div class="image-section">
         <img
-          class="object-cover w-full h-screen hidden md:block"
+          class="form-image"
           src="../img/loginbg.png"
+          alt="Login Background"
         />
       </div>
     </div>
+    
+    <script src="../js/particle-animation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.11/dist/sweetalert2.min.js"></script>
   </body>
-  <!-- For Particle -->
-  <script src="../js/particle-animation.js"></script>
-  <!-- For Custom Alert Box -->
-  <script
-    type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.11/dist/sweetalert2.min.js"
-  ></script>
 </html>
