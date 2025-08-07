@@ -1,57 +1,55 @@
 # Login & Register Authentication System
 
-A lightweight PHP authentication system with user login and registration functionality. Built with PHP, MySQL.
+A lightweight PHP authentication system with user login and registration. Built with PHP and MySQL.
 
 ### About This Project
-This authentication system represents my journey as a developer - originally built during my second year of college and recently updated with the knowledge and best practices I've gained since then.
+A basic auth system I built during college and updated with better practices. Handles user registration, login, and sessions.
 
 ## Project Structure
 
 ```
 login-register-php/
 ├── config/
-│   ├── config.php        # Environment configuration and constants
-│   └── database.php      # Database connection and query management
+│   ├── config.php        # Configuration
+│   └── database.php      # Database connection
 ├── includes/
-│   └── SessionManager.php # Session handling and user state management
+│   └── SessionManager.php # Session handling
 ├── models/
 │   └── User.php          # User model
 ├── scripts/
-│   ├── login_post.php    # Login form controller
-│   └── register_post.php # Registration form controller
+│   ├── login_post.php    # Login handler
+│   └── register_post.php # Registration handler
 ├── pages/
 │   ├── landing.php
 │   ├── login.php
 │   ├── register.php
-│   └── dashboard.php     # Protected dashboard page
+│   └── dashboard.php     # Protected page
 ├── css/
 │   └── style.css
 ├── js/
 │   └── particle-animation.js
 ├── img/
-│   ├── shape.svg
-│   ├── loginbg.png
-│   └── registerbg.png
-├── .env                  # Environment variables (not included)
-├── .gitignore
-├── index.php            # Entry point redirect
+│   └── [background images]
+├── .env                  # Environment variables
+├── index.php            # Entry point
 ├── tblusers.sql         # Database schema
 └── README.md            # This file
 ```
 
-## Key Features
+## Features
 
--   **Session Management** - Comprehensive session handling with timeout support
--   **Input Validation** - Server-side and client-side form validation
--   **Responsive Design** - Mobile-first approach with modern CSS
--   **Environment Configuration** - Secure configuration with .env support
+- User registration and login
+- Session management
+- Form validation
+- Responsive design
+- Environment configuration
 
 ## Technologies Used
 
--   **PHP 7.4+** (Server-side logic, authentication, session management)
--   **MySQL/MariaDB** (User data storage with prepared statements)
--   **HTML5 & CSS3** (Modern responsive design with flexbox and grid)
--   **JavaScript ES6+** (Particle animations and form validation)
+- PHP 7.4+
+- MySQL
+- HTML5 & CSS3
+- JavaScript
 
 ## Getting Started
 
